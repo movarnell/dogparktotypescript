@@ -9,15 +9,8 @@ import FAQ from './Components/FAQ';
 import Navigation from './Components/Navigation';
 import Title from './Components/Title';
 import axios from 'axios';
+import { User } from './Components/User';
 
-type User = {
-  id: number,
-  name: string,
-  dogname: string,
-  date: string,
-  friendly: boolean,
-  puppy: boolean,
-}
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
