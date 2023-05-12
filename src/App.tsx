@@ -16,14 +16,7 @@ function App() {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    axios.get<User[]>("https://michaelvarnell.com/dogparkserver/get_users.php")
-      .then((response: { data: SetStateAction<User[]>; }) => {
-        setUsers(response.data);
-      })
-      .then(parseFriendly)
-      .catch((error: any) => {
-        console.log(error);
-      });
+    getUsers();
   }, []);
 
   async function fetchUsers(): Promise<User[]> {
@@ -42,18 +35,17 @@ function App() {
     console.log("file: App.js:45 ~ getUsers ~ usersFromServer:", usersFromServer)
   }
 
-  function createUser(data: any) {
+  function createUser(data: User) {
     axios.post("https://michaelvarnell.com/dogparkserver/add_dog.php", data)
       .then((response: { data: any; }) => {
         console.log(response.data);
       })
-      .then(parseFriendly)
       .catch((error: any) => {
         console.log(error);
       });
   }
 
-  function deleteUser(userId: number) {
+  function deleteUser(userId: any) {
     console.log("file: App.js:58 ~ deleteUser ~ userId:", userId)
     axios.delete("https://michaelvarnell.com/dogparkserver/delete_user.php?id=" + userId)
       .then((response: { data: any; }) => {
@@ -67,17 +59,17 @@ function App() {
       });
   }
 // TODO This function may not be needed in typescript because the data is already a boolean
-  const parseFriendly = () => {
-    const newUsers: User[] = users.map((user) => {
-      if (user.friendly === true) {
-        user.friendly = true;
-      } else {
-        user.friendly = false;
-      }
-      return user;
-    });
-    setUsers(newUsers);
-  }
+  // const parseFriendly = () => {
+  //   const newUsers: User[] = users.map((user) => {
+  //     if (user.friendly === true) {
+  //       user.friendly = true;
+  //     } else {
+  //       user.friendly = false;
+  //     }
+  //     return user;
+  //   });
+  //   setUsers(newUsers);
+  // }
 
   console.log(users);
 
@@ -88,10 +80,10 @@ function App() {
         <Navigation />
       </div>
       <Routes>
-        <Route path="/" element={<MainPage users={users} createUser={createUser} deleteUser={deleteUser} setUsers={setUsers} />} />
+        <Route path="/" element={<MainPage users={users} createUser={createUser} deleteUser={deleteUser} getUsers={getUsers} setUsers={setUsers} />} />
         <Route path='/faq' element={<FAQ />} />
         <Route path='/schedule' element={<Schedule users={users} deleteUser={deleteUser} getUsers={getUsers} />} />
-        <Route path='*' element={<MainPage users={users} createUser={createUser} deleteUser={deleteUser} />} />
+        <Route path='*' element={<MainPage users={users} createUser={createUser} deleteUser={deleteUser} getUsers={getUsers} setUsers={setUsers} />} />
       </Routes>
     </>
   );

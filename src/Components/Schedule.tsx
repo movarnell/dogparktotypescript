@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import  {useEffect} from 'react';
 import Calendar from './Calendar';
 import { format } from 'date-fns';
 import { User } from './User';
 
 
-export default function Schedule({users, deleteUser, getUsers}:{ users: User[], deleteUser: (userId: number) => void, getUsers: () => void}) {
+export default function Schedule({users, deleteUser, getUsers}:{ users: User[], deleteUser: (userId: any) => void, getUsers: () => void}) {
   
     // add useeffect to get users from database
     useEffect(() => {

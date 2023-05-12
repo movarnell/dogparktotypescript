@@ -1,18 +1,21 @@
-import React from "react";
-import TodaysSchedule from "./TodaysSchedule";
-import Entry from "./Entry";
-import { User } from "./User";
+import React from 'react';
+import TodaysSchedule from './TodaysSchedule';
+import Entry from './Entry';
+import { User } from './User';
 
-export default function Mainpage(
-        { users, createUser, deleteUser, getUsers, setUsers }: {
-                users: User[],
-                createUser: (data: any) => void,
-                deleteUser: (userId: number) => void,
-                getUsers: () => void,
-                setUsers: (users: User[]) => void,
-        }) {
-                
-
+export default function MainPage({
+	users,
+	createUser,
+	deleteUser,
+	getUsers,
+	setUsers,
+}: {
+	users: User[];
+	createUser: (data: any) => void;
+	deleteUser: (userId: number) => void;
+	getUsers: () => void;
+	setUsers: (users: User[])=> void;
+}) {
 	return (
 		<>
 			<div className="container-fluid">
@@ -26,7 +29,11 @@ export default function Mainpage(
 						/>
 					</div>
 					<div className="col-md-6 col-sm-12">
-						<TodaysSchedule users={users} deleteUser={deleteUser} />
+						<TodaysSchedule
+							users={users}
+							deleteUser={deleteUser}
+							getUsers={getUsers}
+						/>
 					</div>
 				</div>
 			</div>
