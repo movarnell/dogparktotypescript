@@ -1,17 +1,13 @@
-// import {useEffect} from "react";
+
 import { format, addHours} from "date-fns";
 import { User } from "./User";
 
-
-export default function TodaysSchedule({ users, deleteUser, getUsers }: { users: User[], deleteUser: (userId: any) => void, getUsers: () => void }) {
+// Main component for displaying today's schedule
+export default function TodaysSchedule({ users, deleteUser }: { users: User[], deleteUser: (userId: any) => void, getUsers: () => void }) {
+	// Logging users for debugging purposes
 	console.log(users);
 
-   // add useeffect to get users from database
-//    useEffect(() => {
-//         getUsers();
-//     }, []);
-
-// Function that filters out users that are not for today
+	// This function filters the users for today's date
 	function todaysUsers(users: User[])
 	{
 		const today = new Date();
@@ -25,8 +21,8 @@ export default function TodaysSchedule({ users, deleteUser, getUsers }: { users:
 		return todaysUsers;
 	}
 	
-// Function that sorts users by date and time with the most recent at the top
-function sortUsers(users: User[]) {
+	// This function sorts users by date
+	function sortUsers(users: User[]) {
 		const sortedUsers = users.sort((a, b) => {
 			const aTime: any = new Date(a.date);
 			const bTime: any = new Date(b.date);
@@ -35,7 +31,7 @@ function sortUsers(users: User[]) {
 		return sortedUsers;
 	}
 
-	// declare variables for various functions in the return statement
+	// Getting today's schedule and the users for the next hour
 	const todaySchedule = todaysUsers(users);
 	const nextHrUsers: User[] = [];
 	const nxtHr = addHours(new Date(), 1);
@@ -51,36 +47,36 @@ function sortUsers(users: User[]) {
 	const filteredUsers = sortUsers(todaySchedule);
 	const usersNxtHr = sortUsers(nextHrUsers);
 
-	// Function that formats the time the way we want it to display
+	// This function formats the date into a human-readable time format
 	function formatTime(time: Date) {
 		const date: Date = new Date(time);
 		return format(date, "h:mm a");
 	}
 
-//! This particular function may not be needed in typescript, but I am leaving it in for now.
-	function parseBoolean(friendly: any) {
-		console.log(friendly);
-		if (friendly === "0") {
-			console.log("true");
+	// This function parses the 'friendly' field from the user's data
+	// function parseBoolean(friendly: any) {
+	// 	console.log(friendly);
+	// 	if (friendly === "0") {
+	// 		console.log("true");
+	// 		return true;
+	// 	} else {
+	// 		console.log("false");
+	// 		return false;
+	// 	}
+	// }	
+
+	const now = new Date();
+
+	// This function checks if the user is within the next hour
+	function userNxtHrTime(user: User) {
+		const userTime: Date = new Date(user.date);
+		const userNxtHr: Date = addHours(userTime, 1);
+		if (now > userTime && now < userNxtHr) {
 			return true;
-		} else {
-			console.log("false");
-			return false;
 		}
-	}	
-
-const now = new Date();
-
-// This function is to make sure the time is within the hour the user scheduled to be there. If it is not, it will not display the alert
-function userNxtHrTime(user: User) {
-	const userTime: Date = new Date(user.date);
-	const userNxtHr: Date = addHours(userTime, 1);
-	if (now > userTime && now < userNxtHr) {
-		return true;
 	}
-}
 
-// return element for the today schedule with alerts where appropriate and sorted with next up at the top, with alerts specific to dogs coming in the next hour
+
 	return (
         <>
         
@@ -114,8 +110,8 @@ function userNxtHrTime(user: User) {
 							) : (
 								""
 							)}
-							{/* if the user is friendly, show the friendly alert */}
-	{ !parseBoolean(user.friendly)  ? <h6 className="alert alert-danger fw-bolder border border-2 border-secondary m-1 p-1"><svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" className="mb-2 me-1" height="1.75em" width="1.75em" xmlns="http://www.w3.org/2000/svg"><path d="M193 796c0 17.7 14.3 32 32 32h574c17.7 0 32-14.3 32-32V563c0-176.2-142.8-319-319-319S193 386.8 193 563v233zm72-233c0-136.4 110.6-247 247-247s247 110.6 247 247v193H404V585c0-5.5-4.5-10-10-10h-44c-5.5 0-10 4.5-10 10v171h-75V563zm-48.1-252.5l39.6-39.6c3.1-3.1 3.1-8.2 0-11.3l-67.9-67.9a8.03 8.03 0 0 0-11.3 0l-39.6 39.6a8.03 8.03 0 0 0 0 11.3l67.9 67.9c3.1 3.1 8.1 3.1 11.3 0zm669.6-79.2l-39.6-39.6a8.03 8.03 0 0 0-11.3 0l-67.9 67.9a8.03 8.03 0 0 0 0 11.3l39.6 39.6c3.1 3.1 8.2 3.1 11.3 0l67.9-67.9c3.1-3.2 3.1-8.2 0-11.3zM832 892H192c-17.7 0-32 14.3-32 32v24c0 4.4 3.6 8 8 8h688c4.4 0 8-3.6 8-8v-24c0-17.7-14.3-32-32-32zM484 180h56c4.4 0 8-3.6 8-8V76c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v96c0 4.4 3.6 8 8 8z"></path></svg>
+							
+							{user.friendly ? <h6 className="alert alert-danger fw-bolder border border-2 border-secondary m-1 p-1"><svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" className="mb-2 me-1" height="1.75em" width="1.75em" xmlns="http://www.w3.org/2000/svg"><path d="M193 796c0 17.7 14.3 32 32 32h574c17.7 0 32-14.3 32-32V563c0-176.2-142.8-319-319-319S193 386.8 193 563v233zm72-233c0-136.4 110.6-247 247-247s247 110.6 247 247v193H404V585c0-5.5-4.5-10-10-10h-44c-5.5 0-10 4.5-10 10v171h-75V563zm-48.1-252.5l39.6-39.6c3.1-3.1 3.1-8.2 0-11.3l-67.9-67.9a8.03 8.03 0 0 0-11.3 0l-39.6 39.6a8.03 8.03 0 0 0 0 11.3l67.9 67.9c3.1 3.1 8.1 3.1 11.3 0zm669.6-79.2l-39.6-39.6a8.03 8.03 0 0 0-11.3 0l-67.9 67.9a8.03 8.03 0 0 0 0 11.3l39.6 39.6c3.1 3.1 8.2 3.1 11.3 0l67.9-67.9c3.1-3.2 3.1-8.2 0-11.3zM832 892H192c-17.7 0-32 14.3-32 32v24c0 4.4 3.6 8 8 8h688c4.4 0 8-3.6 8-8v-24c0-17.7-14.3-32-32-32zM484 180h56c4.4 0 8-3.6 8-8V76c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v96c0 4.4 3.6 8 8 8z"></path></svg>
      This dog is not friendly with either other dogs or people. 
 								</h6>:('')}
 
@@ -126,7 +122,7 @@ function userNxtHrTime(user: User) {
 							) : (
 								""
 							)}
-							{parseBoolean(user.puppy) === false  ? (
+							{user.puppy ? (
 								<p className="alert alert-success border border-2 border-secondary m-1 p-1">
 								<svg stroke="currentColor" fill="currentColor" strokeWidth="0" version="1" viewBox="0 0 48 48" enableBackground="new 0 0 48 48" height="1.75em" width="1.75em" xmlns="http://www.w3.org/2000/svg"><circle fill="#2196F3" cx="24" cy="24" r="21"></circle><rect x="22" y="22" fill="#fff" width="4" height="11"></rect><circle fill="#fff" cx="24" cy="16.5" r="2.5"></circle></svg>	This dog is a puppy. Please be gentle.
 								</p>

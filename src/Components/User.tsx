@@ -4,6 +4,6 @@ export type User = {
         name: string,
         dogName: string,
         date: Date,
-        friendly: boolean,
-        puppy: boolean,
+        friendly: boolean | number;  // can be either boolean or number
+  puppy: boolean | number;  // can be either boolean or number
       }

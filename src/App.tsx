@@ -22,12 +22,18 @@ function App() {
   async function fetchUsers(): Promise<User[]> {
     try {
       const response = await axios.get<User[]>('https://michaelvarnell.com/dogparkserver/get_users.php');
-      return response.data;
+      return response.data.map(user => ({
+        ...user,
+        friendly: Number(user.friendly) === 1, // convert boolean to number before comparing
+        puppy: Number(user.puppy) === 1, // convert boolean to number before comparing
+      }));
     } catch (error) {
       console.log(error);
       return [];
     }
   }
+  
+  
 
   const getUsers = async () => {
     const usersFromServer = await fetchUsers()

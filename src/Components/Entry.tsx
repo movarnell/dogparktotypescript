@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import { User } from './User';
 
 export default function Entry({
@@ -20,6 +20,10 @@ export default function Entry({
 	const [date, setDate] = useState<Date>();
 	const [friendly, setFriendly] = useState(false);
 	const [puppy, setPuppy] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+
+
+const handleClose = () => setShowModal(false);
 
 	// Define onChange event for each input field to update its corresponding state
 	const nameOnChange = (e: any) => {
@@ -34,21 +38,10 @@ export default function Entry({
 	    };
 	    
 	const friendlyOnChange = (e: any) => {
-		if (e.target.checked) {
-			setFriendly(true);
-			console.log("file: Entry.tsx:44   friendlyOnChange   true:", true)
-		} else {
-			setFriendly(false);
-			console.log("file: Entry.tsx:47   friendlyOnChange   false:", false)
-		}
-		console.log(friendly);
+		setFriendly(e.target.checked);
 	};
 	const puppyOnChange = (e: any) => {
-		if (e.target.checked) {
-			setPuppy(true);
-		} else {
-			setPuppy(false);
-		}
+		setPuppy(e.target.checked)
 	};
 
 	// Define onSubmit event for the form to create a new user
@@ -66,8 +59,13 @@ export default function Entry({
 				friendly: friendly,
 				puppy: puppy,
 			};
+			console.log(newUser); 
 			createUser(newUser);
-			setUsers([...users, newUser]);
+			clearForm();
+			setShowModal(true);
+	setUsers([...users, newUser]);
+
+
 
 			console.log('file: Entry.js:53   Entry   newUser:', newUser);
 			clearForm();
@@ -154,6 +152,17 @@ export default function Entry({
 					Schedule it!
 				</Button>
 			</Form>
+			<Modal show={showModal} onHide={handleClose}>
+    <Modal.Header closeButton>
+        <Modal.Title>Submit Successful!</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>It's a Date.</Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+            Close
+        </Button>
+    </Modal.Footer>
+</Modal>
 		</div>
 	);
 }
