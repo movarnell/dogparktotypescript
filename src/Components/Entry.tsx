@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { User } from './User';
-import { set } from 'date-fns';
 
 export default function Entry({
 	users,
@@ -37,8 +36,10 @@ export default function Entry({
 	const friendlyOnChange = (e: any) => {
 		if (e.target.checked) {
 			setFriendly(true);
+			console.log("file: Entry.tsx:44   friendlyOnChange   true:", true)
 		} else {
 			setFriendly(false);
+			console.log("file: Entry.tsx:47   friendlyOnChange   false:", false)
 		}
 		console.log(friendly);
 	};
@@ -73,7 +74,7 @@ export default function Entry({
 		}
 	};
 
-	// Function to clear the form
+	//* Function to clear the form
 	const clearForm = () => {
 		setName('');
 		setDogName('');
@@ -81,7 +82,7 @@ export default function Entry({
 		setPuppy(false);
 	};
 
-	// Render the entry form for the user to input data. Uses onChange and onSubmit events to update state and create a new user.
+	//* Render the entry form for the user to input data. Uses onChange and onSubmit events to update state and create a new user.
 	return (
 		<div className="m-2 p-2  shadow border border-dark border-1 rounded-3">
 			<h2 className="title2 text-center">Schedule your visit</h2>
