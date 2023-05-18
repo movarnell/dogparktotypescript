@@ -1,10 +1,9 @@
 
-import React from 'react';
 import '../../node_modules/react-day-picker/dist/style.css';
 import { DayPicker } from 'react-day-picker';
 import { User } from './User';
 
-export default function Calendar({users: users}:{ users: User[]}) {
+export default function Calendar({users}:{ users: User[]}) {
 function getUniqueDates(users: User[]) {
     // Create an array to store only unique dates
     const uniqueDates: Date[] = [];

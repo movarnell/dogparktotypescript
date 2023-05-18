@@ -24,8 +24,8 @@ function App() {
       const response = await axios.get<User[]>('https://michaelvarnell.com/dogparkserver/get_users.php');
       return response.data.map(user => ({
         ...user,
-        friendly: Number(user.friendly) === 1, // convert boolean to number before comparing
-        puppy: Number(user.puppy) === 1, // convert boolean to number before comparing
+        friendly: Number(user.friendly) === 1, 
+        puppy: Number(user.puppy) === 1, 
       }));
     } catch (error) {
       console.log(error);
@@ -64,18 +64,7 @@ function App() {
         console.log(error);
       });
   }
-// TODO This function may not be needed in typescript because the data is already a boolean
-  // const parseFriendly = () => {
-  //   const newUsers: User[] = users.map((user) => {
-  //     if (user.friendly === true) {
-  //       user.friendly = true;
-  //     } else {
-  //       user.friendly = false;
-  //     }
-  //     return user;
-  //   });
-  //   setUsers(newUsers);
-  // }
+
 
   console.log(users);
 
