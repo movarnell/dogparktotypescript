@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import Calendar from "./Calendar";
-import { format } from "date-fns";
 import { User } from "./User";
 import InfoIcon from "./Icons/InfoIcon";
 import WarningIcon from "./Icons/WarningIcon";
+import {formatDate} from "./utils";
 
 export default function Schedule({
 	users,
@@ -19,16 +19,7 @@ export default function Schedule({
 		getUsers();
 	}, []);
 
-	// sort users array by date and time with the most recent at the top
-	function sortUsers(users: User[]) {
-		const sortedUsers = [...users];
-		sortedUsers.sort((a, b) => {
-			const aDate: any = new Date(a.date);
-			const bDate: any = new Date(b.date);
-			return aDate - bDate;
-		});
-		return sortedUsers;
-	}
+
 	// filter out users that are in the past
 	function getFutureUsers(sortedUsers: User[]) {
 		const futureUsers: User[] = [];
@@ -45,11 +36,7 @@ export default function Schedule({
 	let sortedUsers = sortUsers(users);
 	sortedUsers = sortUsers(getFutureUsers(sortedUsers));
 
-	function formatDate(date: Date) {
-		const dateObj = new Date(date);
-		const formattedDate = format(dateObj, "MM/dd/yyyy h:mm a");
-		return formattedDate;
-	}
+
 
 	// return statement with the calendar and the list of all future scheduled users
 	return (

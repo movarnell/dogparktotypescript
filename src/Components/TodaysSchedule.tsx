@@ -3,6 +3,7 @@ import { format, addHours} from "date-fns";
 import { User } from "./User";
 import InfoIcon from "./Icons/InfoIcon";
 import WarningIcon from "./Icons/WarningIcon";
+import { sortUsers } from "./utils";
 
 // Main component for displaying today's schedule
 export default function TodaysSchedule({ users, deleteUser }: { users: User[], deleteUser: (userId: any) => void, getUsers: () => void }) {
@@ -23,15 +24,7 @@ export default function TodaysSchedule({ users, deleteUser }: { users: User[], d
 		return todaysUsers;
 	}
 	
-	// This function sorts users by date
-	function sortUsers(users: User[]) {
-		const sortedUsers = users.sort((a, b) => {
-			const aTime: any = new Date(a.date);
-			const bTime: any = new Date(b.date);
-			return aTime - bTime;
-		});
-		return sortedUsers;
-	}
+
 
 	// Getting today's schedule and the users for the next hour
 	const todaySchedule = todaysUsers(users);
