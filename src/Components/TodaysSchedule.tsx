@@ -14,15 +14,12 @@ export default function TodaysSchedule({ users, deleteUser }: { users: User[], d
 	function todaysUsers(users: User[])
 	{
 		const today = new Date();
-		const todaysUsers: User[] = [];
-		users.forEach((user) => {
+		return users.filter((user) => {
 			const userTime = new Date(user.date);
-			if (userTime.getDate() === today.getDate()) {
-				todaysUsers.push(user);
-			}
+			return userTime.getDate() === today.getDate();
 		});
-		return todaysUsers;
 	}
+	
 	
 
 
