@@ -59,7 +59,6 @@ const handleClose = () => setShowModal(false);
 				friendly: friendly,
 				puppy: puppy,
 			};
-			console.log(newUser); 
 			createUser(newUser);
 			clearForm();
 			setShowModal(true);
@@ -67,7 +66,6 @@ const handleClose = () => setShowModal(false);
 
 
 
-			console.log('file: Entry.js:53   Entry   newUser:', newUser);
 			clearForm();
 		}
 	};

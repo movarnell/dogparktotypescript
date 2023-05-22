@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainPage from './Components/MainPage';
 import Schedule from './Components/Schedule';
 import 'react-bootstrap';
@@ -38,7 +38,6 @@ function App() {
   const getUsers = async () => {
     const usersFromServer = await fetchUsers()
     setUsers(usersFromServer)
-    console.log("file: App.js:45 ~ getUsers ~ usersFromServer:", usersFromServer)
   }
 
   function createUser(data: User) {
@@ -52,7 +51,6 @@ function App() {
   }
 
   function deleteUser(userId: any) {
-    console.log("file: App.js:58 ~ deleteUser ~ userId:", userId)
     axios.delete("https://michaelvarnell.com/dogparkserver/delete_user.php?id=" + userId)
       .then((response: { data: any; }) => {
         console.log(response.data);

@@ -4,6 +4,7 @@ import { User } from "./User";
 import InfoIcon from "./Icons/InfoIcon";
 import WarningIcon from "./Icons/WarningIcon";
 import {formatDate} from "./utils";
+import { sortUsers } from "./utils";
 
 export default function Schedule({
 	users,
@@ -20,7 +21,7 @@ export default function Schedule({
 	}, []);
 
 
-	// filter out users that are in the past
+	// filter out users that are in the past - at the moment this is not resued anywhere else.
 	function getFutureUsers(sortedUsers: User[]) {
 		const futureUsers: User[] = [];
 		const now = new Date();
